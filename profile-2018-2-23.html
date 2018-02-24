@@ -276,11 +276,76 @@
 
 
     (function () {
+
+      class Menu {
+        constructor(list) {
+          var _ctx = this
+          this.selectedNode = null
+          this.nodes = list.map(this.__renderNode.bind(this))
+
+          this.onSelect = function () { }
+          this.onCancelSelect = function () { }
+        }
+        __createEl(item) {
+          var div = document.createElement('div')
+          div.innerHTML = `
+                <div class="title" style='color: ${item.color}'>
+                  <div class="line line--left"></div>
+                  <a>${item.title}</a>
+                  <div class="line line--right"></div>
+                </div>
+                `
+          return div.children[0]
+        }
+        __renderNode(item) {
+          var el = this.__createEl(item)
+          var ain, aout;
+          var lines = [el.children[0], el.children[2]]
+
+          lines.forEach(function (el) {
+            el.style.transform = 'scaleX(0)'
+          })
+
+          return Object.assign(item, {
+            el: el,
+            play() {
+              aout && aout.pause()
+              ain = anime({
+                targets: lines,
+                scaleX: 1,
+                easing: 'easeOutExpo',
+                duration: 600,
+              })
+            },
+            rollback() {
+              ain && ain.pause()
+              aout = anime({
+                targets: lines,
+                scaleX: 0,
+                easing: 'easeOutExpo',
+                duration: 600,
+              })
+            }
+          })
+        }
+        selectNode(node) {
+          if (this.selectedNode === node) return;
+          if (this.selectedNode) {
+            this.selectedNode.rollback()
+            this.selectedNode.el.querySelector('a').classList.remove('selected')
+            this.onCancelSelect(this.selectedNode)
+            // this.rollOut(this.selectedNode)
+          }
+          this.selectedNode = node
+          node.play()
+          node.el.querySelector('a').classList.add('selected')
+          this.onSelect(node)
+        }
+      }
+
       var page = {
         init: function () {
           this.container = document.querySelector('.menu')
-          this.nodes = []
-          this.selectedNode = null
 
           var _ctx = this;
           // var colors = ['rgb(95, 97, 102)', 'rgb(238, 93, 162)', '#4b8e3a', '#a5cbf3', '#ff6845', '#4c7680', '#0273e1', '#eadbd4', '#db9998']
@@ -298,49 +363,13 @@
             color: '#ff6845'
           }]
 
-          this.nodes = colors.map(function (o) {
 
-            var div = document.createElement('div')
-            // div.contentId = ''
-            div.innerHTML = `
-                <div class="title" style='color: ${o.color}'>
-                  <div class="line line--left"></div>
-                  <a>${o.title}</a>
-                  <div class="line line--right"></div>
-                </div>
-  `
-            var el = div.children[0]
-            _ctx.container.appendChild(el)
-
-            var lines = [el.children[0], el.children[2]]
-            lines.forEach(function (el) {
-              el.style.transform = 'scaleX(0)'
-            })
-
-            var ain, aout;
-            return Object.assign(o, {
-              el: el,
-              play() {
-                aout && aout.pause()
-                ain = anime({
-                  targets: lines,
-                  scaleX: 1,
-                  easing: 'easeOutExpo',
-                  duration: 600,
-                })
-              },
-              rollback() {
-                ain && ain.pause()
-                aout = anime({
-                  targets: lines,
-                  scaleX: 0,
-                  easing: 'easeOutExpo',
-                  duration: 600,
-                })
-              }
-            })
+          var menu = new Menu(colors)
+          menu.onSelect = this.rollIn
+          menu.onCancelSelect = this.rollOut
+          menu.nodes.map(function (node) {
+            _ctx.container.appendChild(node.el)
           })
-
 
           // 菜单加载动画
           anime({
@@ -353,29 +382,17 @@
 
               // 绑定菜单效果
               _ctx.container.addEventListener('mouseover', function (e) {
-                _ctx.nodes.map(function (node) {
+                menu.nodes.map(function (node) {
                   if (node.el === e.target) {
-                    _ctx.selectNode(node)
+                    menu.selectNode(node)
                     return;
                   }
                 })
               })
               // 初始选中
-              _ctx.selectNode(_ctx.nodes[0])
+              menu.selectNode(menu.nodes[0])
             }
           })
-        },
-        selectNode(node) {
-          if (this.selectedNode === node) return;
-          if (this.selectedNode) {
-            this.selectedNode.rollback()
-            this.selectedNode.el.querySelector('a').classList.remove('selected')
-            this.rollOut(this.selectedNode)
-          }
-          this.selectedNode = node
-          node.play()
-          this.rollIn(node)
-          node.el.querySelector('a').classList.add('selected')
         },
         rollIn(node) {
           var el = document.querySelector('#' + node.contentId)
