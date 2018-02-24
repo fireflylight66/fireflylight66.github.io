@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Yifan's Profile</title>
+  <style type="text/css">
+    body {
+      font-size: 12px;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+
+    }
+
+    .title {
+      position: relative;
+      padding: 10px 0 10px 40px;
+      overflow: hidden;
+      width: 100%;
+      opacity: 0;
+    }
+
+    .title.title--gray {
+      color: rgb(95, 97, 102);
+    }
+
+    .title.title--red {
+      color: red;
+    }
+
+    .title.title--pink {
+      color: pink;
+    }
+
+    .title>a {
+      pointer-events: none;
+      color: black;
+      z-index: 1;
+      position: relative;
+      display: inline-block;
+      padding-right: 10px;
+      background-color: #fff;
+      transition: color .5s
+    }
+
+    .title>.line {
+      content: '';
+      position: absolute;
+      left: 0;
+      height: 1px;
+      background-color: currentColor;
+      top: 50%;
+      margin-top: -1px;
+      /* visibility: hidden; */
+      /* transform: scaleX(0); */
+    }
+
+    .title>a.selected {
+      color: currentColor;
+    }
+
+    .line.line--left {
+      width: 21px;
+      transform-origin: right;
+    }
+
+    .line.line--right {
+      transform-origin: left;
+      left: 60%;
+      right: 0;
+    }
+
+    .logo {
+      height: 40px;
+      padding-top: 50px;
+      padding-left: 85px;
+      text-align: left;
+      font-size: 11px;
+      line-height: 11px;
+      transition: all .3s;
+      cursor: default;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .menu {
+      padding-top: 120px;
+      font-weight: bold;
+      width: 210px;
+      flex-shrink: 0;
+      height: calc(100vh - 50px);
+    }
+
+    .main {
+      line-height: 1.6;
+      font-size: 14px;
+      margin-left: 140px;
+      margin-right: 60px;
+      position: relative;
+      overflow: hidden;
+      flex-grow: 1;
+    }
+
+    .main>div {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow-y: auto;
+
+    }
+
+    .main__content {
+      z-index: 2;
+      letter-spacing: .1em;
+      color: #333;
+      line-height: 1.7;
+      display: block;
+      transform: translateX(-100%)
+    }
+
+    .main__float {
+      position: fixed;
+      top: -55px;
+      right: 0;
+      font-size: 70px;
+      font-weight: bold;
+      opacity: 0.06;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .main__float__text {
+      transform: translateX(-100%);
+      display: block;
+    }
+
+    .color_gray {
+      color: #999999
+    }
+
+    #aboutme .main__content__primary {
+      color: rgb(238, 93, 162)
+    }
+
+    #aboutme .main__content__sb {
+      font-size: 14px;
+    }
+
+    #projects .main__content__primary {
+      color: #4b8e3a
+    }
+
+    #work .main__content__primary {
+      color: #ff6845
+    }
+  </style>
+</head>
+
+<body>
+
+
+
+
+  <div class="logo">Yifan's Profile</div>
+  <div class="container">
+    <div class="menu">
+
+    </div>
+    <div class="main">
+      <div id="aboutme">
+        <div class="main__float">
+          <h1 class="main__float__text">ABOUT</h1>
+        </div>
+        <div class="main__content">
+          <h1>王嘉诚
+            <span class="color_gray main__content__sb">前端工程师</span>
+          </h1>
+          <p>2年全职工作经验, 擅长h5和pc开发, 喜欢收藏长得好看的网站
+            <br />现居杭州, 轻度强迫症患者, 单身狗</p>
+          <p>
+            <div class="color_gray">擅长技能</div>
+            <div class="main__content__primary">React/Vue/JQuery/CSS/页面设计</div>
+          </p>
+          <p>
+            <div class="color_gray">教育背景</div>
+            <div>北京航空航天大学(大专)
+              <span class="color_gray">计算机科学与技术专业</span>
+            </div>
+          </p>
+          <p>
+            <div class="color_gray">联系方式</div>
+            <div>phone. 18069784769</div>
+            <div>email. fireflylight66@gmail.com</div>
+          </p>
+        </div>
+      </div>
+      <div id="projects">
+        <div class="main__float">
+          <h1 class="main__float__text">PROJECTS</h1>
+        </div>
+        <div class="main__content">
+          <h3>
+            聚美丽学院h5版
+          </h3>
+          <p>
+            一开始是个zepto项目, 一个js对应一个页面, 代码多且逻辑乱, 在我接手开发的过程中
+          </p>
+          <ul>
+            <li>
+              先是用react重写, 把可复用内容
+              <span class="main__content__primary">提成组件, 简化逻辑</span>
+            </li>
+            <li>
+              加上webpack编译, 压缩/拆分代码
+              <span class="main__content__primary">提高加载速度</span>, 给资源文件打上hash, 顺便用上es6提升开发体验
+            </li>
+            <li>
+              配置ngnix缓存 保证更新时
+              <span class="main__content__primary">最小化改动下载</span>
+            </li>
+            <li>业余时间把改造了部分页面 搭建express中间层 用universal-router实现
+              <span class="main__content__primary">服务端渲染</span> 做到在几百ms内展示首屏 但是后面因为没有足够时间改造所有的页面(项目周期太紧) 所以就流产了
+            </li>
+            <li>
+              接入了sentry错误日志上传 定位一些难复现的兼容性bug
+            </li>
+          </ul>
+
+          <h3>聚美丽学院admin</h3>
+          <p>
+            一开始用jquery写的 接手后用vue重构了一下 主要是表格表单比较多 借鉴了antd的table思路 column直接写render 但是vue没有jsx这样的语法 不能在组件中直接写标签返回 想了个兼容的办法在column里加上写type
+            如果是label那就直接展示, 如果是option则返回一个数组, 每个item有title和onClick, 然后table会去遍历option组织成a标签的形式来展示
+          </p>
+
+          <h3>聚美丽学院企业大学admin</h3>
+          <p>
+            新项目, 用了antd, antd搭配react简直完美, 再加上react-router和redux-saga, 开发只用了一周 最大的好处就是界面效果好开发速度快 值得一提的是用到了富文本框 用的braft-editor 也很方便集成
+          </p>
+        </div>
+      </div>
+      <div id="work">
+        <div class="main__float">
+          <h1 class="main__float__text">WORK</h1>
+        </div>
+        <div class="main__content">
+          <h3>思迪信息技术股份有限公司
+          </h3>
+          <div class="color_gray">前端开发工程师 2016.02 — 2016.12</div>
+          <p>负责证券开户产品, 开发了证券
+            <span class='main__content__primary'>开户标准版2.0</span>
+            <br />相关技术: seajs, zepto, spa web</p>
+          <h3>杭州奇聚网络科技有限公司
+            <span class="color_gray">2017.03 — 至今</span>
+          </h3>
+          <p>负责前端的技术选型和开发, 开发了
+            <span class='main__content__primary'>聚美丽学院h5/聚美丽学院管理后台</span> 等
+            <br />相关技术: react/vue/webpack</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.bootcss.com/animejs/2.2.0/anime.js"></script>
+  <script>
+
+
+    (function () {
+      var page = {
+        init: function () {
+          this.container = document.querySelector('.menu')
+          this.nodes = []
+          this.selectedNode = null
+
+          var _ctx = this;
+          // var colors = ['rgb(95, 97, 102)', 'rgb(238, 93, 162)', '#4b8e3a', '#a5cbf3', '#ff6845', '#4c7680', '#0273e1', '#eadbd4', '#db9998']
+          var colors = [{
+            title: '简介',
+            contentId: 'aboutme',
+            color: 'rgb(238, 93, 162)'
+          }, {
+            title: '项目经验',
+            contentId: 'projects',
+            color: '#4b8e3a'
+          }, {
+            title: '工作经历',
+            contentId: 'work',
+            color: '#ff6845'
+          }]
+
+          this.nodes = colors.map(function (o) {
+
+            var div = document.createElement('div')
+            // div.contentId = ''
+            div.innerHTML = `
+                <div class="title" style='color: ${o.color}'>
+                  <div class="line line--left"></div>
+                  <a>${o.title}</a>
+                  <div class="line line--right"></div>
+                </div>
+  `
+            var el = div.children[0]
+            _ctx.container.appendChild(el)
+
+            var lines = [el.children[0], el.children[2]]
+            lines.forEach(function (el) {
+              el.style.transform = 'scaleX(0)'
+            })
+
+            var ain, aout;
+            return Object.assign(o, {
+              el: el,
+              play() {
+                aout && aout.pause()
+                ain = anime({
+                  targets: lines,
+                  scaleX: 1,
+                  easing: 'easeOutExpo',
+                  duration: 600,
+                })
+              },
+              rollback() {
+                ain && ain.pause()
+                aout = anime({
+                  targets: lines,
+                  scaleX: 0,
+                  easing: 'easeOutExpo',
+                  duration: 600,
+                })
+              }
+            })
+          })
+
+
+          // 菜单加载动画
+          anime({
+            targets: this.container.children,
+            translateX: '+=45',
+            opacity: 1,
+            easing: 'easeOutQuint',
+            delay: function (el, i, l) { return i * 200; },
+            complete() {
+
+              // 绑定菜单效果
+              _ctx.container.addEventListener('mouseover', function (e) {
+                _ctx.nodes.map(function (node) {
+                  if (node.el === e.target) {
+                    _ctx.selectNode(node)
+                    return;
+                  }
+                })
+              })
+              // 初始选中
+              _ctx.selectNode(_ctx.nodes[0])
+            }
+          })
+        },
+        selectNode(node) {
+          if (this.selectedNode === node) return;
+          if (this.selectedNode) {
+            this.selectedNode.rollback()
+            this.selectedNode.el.querySelector('a').classList.remove('selected')
+            this.rollOut(this.selectedNode)
+          }
+          this.selectedNode = node
+          node.play()
+          this.rollIn(node)
+          node.el.querySelector('a').classList.add('selected')
+        },
+        rollIn(node) {
+          var el = document.querySelector('#' + node.contentId)
+          var text = el.querySelector('.main__float__text')
+          anime({
+            targets: [el.querySelector('.main__content'), text],
+            translateX: [
+              { value: '-100%', duration: 0 },
+              { value: 0, duration: 600 }
+            ],
+            delay: 200,
+            easing: 'easeOutQuint',
+            begin: function () {
+              text.style.color = node.color
+              el.style.display = 'block'
+            }
+          })
+        },
+        rollOut(node) {
+          var el = document.querySelector('#' + node.contentId)
+          anime({
+            targets: [el.querySelector('.main__content'), el.querySelector('.main__float__text')],
+            translateX: '100%',
+            duration: 500,
+            easing: 'easeOutQuint',
+            complete: function () {
+              el.style.display = 'none'
+            }
+          })
+        }
+      }
+      page.init()
+    }())
+
+  </script>
+</body>
+
+</html>
